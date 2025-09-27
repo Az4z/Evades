@@ -1,0 +1,188 @@
+-- LOCAL SCRIPT COMPLETO COM SLIDERS
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+
+-- CONFIGURAÇÕES
+local GUI_NAME = "AdvancedMinimalGUI"
+local WIDTH = 0.35
+local HEIGHT = 0.32
+local TOP_PADDING = 0.06
+local ACCENT_COLOR = Color3.fromRGB(97,97,255)
+local TWEEN_INFO = TweenInfo.new(0.18, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+-- REMOVER GUI ANTIGO
+local existing = LocalPlayer:FindFirstChild("PlayerGui"):FindFirstChild(GUI_NAME)
+if existing then existing:Destroy() end
+
+-- CRIAR GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = GUI_NAME
+screenGui.ResetOnSpawn = false
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+
+local window = Instance.new("Frame")
+window.Size = UDim2.new(WIDTH,0,HEIGHT,0)
+window.Position = UDim2.new(0.05,0,TOP_PADDING,0)
+window.BackgroundColor3 = Color3.fromRGB(25,25,28)
+window.BackgroundTransparency = 0.4
+window.BorderSizePixel = 0
+window.Active = true
+window.Parent = screenGui
+Instance.new("UICorner", window).CornerRadius = UDim.new(0,12)
+
+-- HEADER
+local header = Instance.new("Frame", window)
+header.Size = UDim2.new(1,0,0,36)
+header.BackgroundTransparency = 1
+
+local title = Instance.new("TextLabel", header)
+title.Size = UDim2.new(1,-50,1,0)
+title.Position = UDim2.new(0,10,0,0)
+title.BackgroundTransparency = 1
+title.Font = Enum.Font.GothamSemibold
+title.TextSize = 15
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Text = "Painel Avançado"
+title.TextColor3 = Color3.fromRGB(220,220,220)
+
+-- BOTÃO MINIMIZAR
+local btnMin = Instance.new("TextButton", header)
+btnMin.Size = UDim2.new(0,36,0,24)
+btnMin.Position = UDim2.new(1,-44,0.5,-12)
+btnMin.BackgroundColor3 = Color3.fromRGB(35,35,40)
+btnMin.BackgroundTransparency = 0.1
+btnMin.BorderSizePixel = 0
+btnMin.Font = Enum.Font.GothamBold
+btnMin.TextSize = 20
+btnMin.Text = "—"
+btnMin.TextColor3 = Color3.fromRGB(220,220,220)
+Instance.new("UICorner", btnMin).CornerRadius = UDim.new(0,6)
+
+-- CONTAINER DE CONTEÚDO
+local content = Instance.new("Frame", window)
+content.Name = "Content"
+content.Size = UDim2.new(1,-12,1,-44)
+content.Position = UDim2.new(0,6,0,40)
+content.BackgroundTransparency = 1
+local layout = Instance.new("UIListLayout", content)
+layout.Padding = UDim.new(0,8)
+layout.FillDirection = Enum.FillDirection.Vertical
+layout.HorizontalAlignment = Enum.HorizontalAlignment.Left
+layout.SortOrder = Enum.SortOrder.LayoutOrder
+
+-- TOGGLE GENÉRICO
+local function createToggle(name, default, callback)
+    local frame = Instance.new("Frame", content)
+    frame.Size = UDim2.new(1,-6,0,36)
+    frame.BackgroundColor3 = Color3.fromRGB(30,30,35)
+    frame.BackgroundTransparency = 0.5
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0,8)
+
+    local lbl = Instance.new("TextLabel", frame)
+    lbl.Size = UDim2.new(0.7,0,1,0)
+    lbl.Position = UDim2.new(0,8,0,0)
+    lbl.BackgroundTransparency = 1
+    lbl.Font = Enum.Font.Gotham
+    lbl.TextSize = 14
+    lbl.TextColor3 = Color3.fromRGB(230,230,230)
+    lbl.TextXAlignment = Enum.TextXAlignment.Left
+    lbl.Text = name
+
+    local btn = Instance.new("TextButton", frame)
+    btn.Size = UDim2.new(0,50,0,20)
+    btn.Position = UDim2.new(1,-60,0.5,-10)
+    btn.BackgroundColor3 = default and ACCENT_COLOR or Color3.fromRGB(60,60,60)
+    btn.Text = ""
+    btn.AutoButtonColor = false
+    Instance.new("UICorner", btn).CornerRadius = UDim.new(1,0)
+
+    local knob = Instance.new("Frame", btn)
+    knob.Size = UDim2.new(0,18,0,18)
+    knob.Position = default and UDim2.new(1,-19,0.5,-9) or UDim2.new(0,1,0.5,-9)
+    knob.BackgroundColor3 = Color3.fromRGB(240,240,240)
+    Instance.new("UICorner", knob).CornerRadius = UDim.new(1,0)
+
+    local state = default
+    btn.MouseButton1Click:Connect(function()
+        state = not state
+        local goalColor = state and ACCENT_COLOR or Color3.fromRGB(60,60,60)
+        TweenService:Create(btn,TWEEN_INFO,{BackgroundColor3=goalColor}):Play()
+        local goalPos = state and UDim2.new(1,-19,0.5,-9) or UDim2.new(0,1,0.5,-9)
+        TweenService:Create(knob,TWEEN_INFO,{Position=goalPos}):Play()
+        callback(state)
+    end)
+end
+
+-- FUNÇÃO SLIDER GENÉRICA
+local function createSlider(name, min, max, default, callback)
+    local frame = Instance.new("Frame", content)
+    frame.Size = UDim2.new(1,-6,0,50)
+    frame.BackgroundColor3 = Color3.fromRGB(30,30,35)
+    frame.BackgroundTransparency = 0.5
+    Instance.new("UICorner", frame).CornerRadius = UDim.new(0,8)
+
+    local lbl = Instance.new("TextLabel", frame)
+    lbl.Size = UDim2.new(0.6,0,0,20)
+    lbl.Position = UDim2.new(0,8,0,4)
+    lbl.BackgroundTransparency = 1
+    lbl.Font = Enum.Font.Gotham
+    lbl.TextSize = 14
+    lbl.TextColor3 = Color3.fromRGB(230,230,230)
+    lbl.TextXAlignment = Enum.TextXAlignment.Left
+    lbl.Text = name.." ("..default..")"
+
+    local bar = Instance.new("Frame", frame)
+    bar.Size = UDim2.new(1,-16,0,6)
+    bar.Position = UDim2.new(0,8,1,-18)
+    bar.BackgroundColor3 = Color3.fromRGB(70,70,75)
+    bar.BorderSizePixel = 0
+    Instance.new("UICorner", bar).CornerRadius = UDim.new(1,0)
+
+    local fill = Instance.new("Frame", bar)
+    fill.Size = UDim2.new((default-min)/(max-min),0,1,0)
+    fill.BackgroundColor3 = ACCENT_COLOR
+    fill.BorderSizePixel = 0
+    Instance.new("UICorner", fill).CornerRadius = UDim.new(1,0)
+
+    local knob = Instance.new("Frame", bar)
+    knob.Size = UDim2.new(0,14,0,14)
+    knob.Position = UDim2.new(fill.Size.X.Scale,-7,0.5,-7)
+    knob.BackgroundColor3 = Color3.fromRGB(240,240,240)
+    knob.BorderSizePixel = 0
+    Instance.new("UICorner", knob).CornerRadius = UDim.new(1,0)
+
+    local dragging = false
+    knob.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+        end
+    end)
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = false
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+            local pos = math.clamp((input.Position.X - bar.AbsolutePosition.X)/bar.AbsoluteSize.X,0,1)
+            fill.Size = UDim2.new(pos,0,1,0)
+            knob.Position = UDim2.new(pos,-7,0.5,-7)
+            local value = math.floor(min + (max-min)*pos)
+            lbl.Text = name.." ("..value..")"
+            callback(value)
+        end
+    end)
+end
+
+-- INSTANT REVIVE TOGGLE
+createToggle("Instant Revive", false, function(active)
+    RunService.RenderStepped:Connect(function()
+        if active and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+            for _, plr in pairs(Players:GetPlayers()) do
+                if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("Humanoid") then
+                    local down
