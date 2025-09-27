@@ -1,4 +1,5 @@
--- LOCAL SCRIPT COMPLETO COM SLIDERS
+-- Coloque este LocalScript em StarterGui
+
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
 local TweenService = game:GetService("TweenService")
@@ -22,7 +23,6 @@ if existing then existing:Destroy() end
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = GUI_NAME
 screenGui.ResetOnSpawn = false
-screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 screenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 
 local window = Instance.new("Frame")
@@ -75,7 +75,7 @@ layout.FillDirection = Enum.FillDirection.Vertical
 layout.HorizontalAlignment = Enum.HorizontalAlignment.Left
 layout.SortOrder = Enum.SortOrder.LayoutOrder
 
--- TOGGLE GENÉRICO
+-- FUNÇÃO TOGGLE GENÉRICA
 local function createToggle(name, default, callback)
     local frame = Instance.new("Frame", content)
     frame.Size = UDim2.new(1,-6,0,36)
@@ -179,10 +179,18 @@ local function createSlider(name, min, max, default, callback)
     end)
 end
 
--- INSTANT REVIVE TOGGLE
+-- INSTANT REVIVE
 createToggle("Instant Revive", false, function(active)
     RunService.RenderStepped:Connect(function()
         if active and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
             for _, plr in pairs(Players:GetPlayers()) do
                 if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("Humanoid") then
-                    local down
+                    local downed = plr.Character:FindFirstChild("Downed")
+                    if downed and downed.Value then
+                        local distance = (LocalPlayer.Character.HumanoidRootPart.Position - plr.Character.HumanoidRootPart.Position).Magnitude
+                        if distance <= 8 then
+                            local reviveEvent = ReplicatedStorage:FindFirstChild("RevivePlayer")
+                            if reviveEvent then
+                                reviveEvent:FireServer(plr)
+                            end
+                        end
