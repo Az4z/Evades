@@ -1,489 +1,547 @@
-workspace.FallenPartsDestroyHeight = 0/0
+local RunService = game:GetService('RunService')
+local UserInputService = game:GetService('UserInputService')
+local TweenService = game:GetService('TweenService')
+local Workspace = game:GetService('Workspace')
+local LocalPlayer = game:GetService('Players').LocalPlayer
 
-_G.fling = false
-_G.SpamSounds = true
-_G.US = true
-_G.lmao = true
-_G.Annoy = true
-_G.freeze = true
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+local Humanoid = Character:WaitForChild('Humanoid')
+local HumanoidRootPart = Character:WaitForChild('HumanoidRootPart')
+local CurrentCamera = Workspace.CurrentCamera
 
-local DiscordLib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/discord%20lib.txt")()
-local win = DiscordLib:Window("dot.hub | discord ui is better in this situation")
-local serv = win:Server("sno hax 1.8","")
-local main = serv:Channel("Main")
-local ex = serv:Channel("Expanders")
-local lp = serv:Channel("LocalPlayer")
-local farm = serv:Channel("Farm")
-local troll = serv:Channel("Troll")
-local cr = serv:Channel("Character")
-local tp = serv:Channel("Teleports")
-main:Seperator()
+local bgColor = Color3.fromRGB(25, 25, 35)
+local frameColor = Color3.fromRGB(35, 40, 55)
+local accentColor = Color3.fromRGB(200, 160, 100)
+local accentDark = Color3.fromRGB(180, 140, 80)
+local textColor = Color3.fromRGB(240, 240, 230)
+local textDim = Color3.fromRGB(180, 180, 170)
+local successColor = Color3.fromRGB(100, 200, 100)
 
-troll:Textbox("Player to freeze","CAN'T be shortened",true,function(plr)
-    _G.Annoy = true
-    p = Instance.new("Part",workspace)
-    p.Name = "snowball"
-    while _G.Annoy do
-    wait(3.25)
-    local args = {
-        [1] = {
-            ["visual"] = Instance.new("Part",workspace),
-            ["airshot"] = true,
-            ["active"] = false,
-            ["vel"] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2),
-            ["Update"] = function()end --[[Update]],
-            ["startpos"] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2),
-            ["hitdat"] = {
-                [1] = game:GetService("Players")[tostring(plr)].Character.Head,
-                [2] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2),
-                [3] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2),
-                [4] = Enum.Material.Sand
-            },
-            ["CheckCol"] = function()end --[[CheckCol]],
-            ["FireSnow"] = function()end --[[FireSnow]],
-            ["pos"] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2)
-        }
-    }
-    
-    game:GetService("ReplicatedStorage").Remotes.Combat.Hit:FireServer(unpack(args))
-end
+local ScreenGui = Instance.new('ScreenGui')
+ScreenGui.Name = 'sjxwmuahvvhk'
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = game:GetService('CoreGui').RobloxGui
+
+local MainFrame = Instance.new('Frame')
+MainFrame.Name = 'iwuduyjvon'
+MainFrame.BackgroundColor3 = bgColor
+MainFrame.BorderSizePixel = 0
+MainFrame.Position = UDim2.new(0.5, -225, 0.5, -200)
+MainFrame.Size = UDim2.new(0, 450, 0, 400)
+MainFrame.ZIndex = 9000
+MainFrame.Parent = ScreenGui
+
+local MainCorner = Instance.new('UICorner')
+MainCorner.Name = 'bhjkpq'
+MainCorner.CornerRadius = UDim.new(0, 16)
+MainCorner.Parent = MainFrame
+
+local MainStroke = Instance.new('UIStroke')
+MainStroke.Name = 'syncware'
+MainStroke.Color = accentColor
+MainStroke.Thickness = 2
+MainStroke.Transparency = 0.3
+MainStroke.Parent = MainFrame
+
+local GlowImage = Instance.new('ImageLabel')
+GlowImage.Name = 'baaiuk'
+GlowImage.BackgroundTransparency = 1
+GlowImage.Position = UDim2.new(0.5, 0, 0.5, 0)
+GlowImage.Size = UDim2.new(1, 40, 1, 40)
+GlowImage.AnchorPoint = Vector2.new(0.5, 0.5)
+GlowImage.Image = 'rbxasset://textures/ui/Glow.png'
+GlowImage.ImageColor3 = accentColor
+GlowImage.ImageTransparency = 0.8
+GlowImage.ZIndex = MainFrame.ZIndex - 1
+GlowImage.Parent = MainFrame
+
+local HeaderFrame = Instance.new('Frame')
+HeaderFrame.Name = 'qupfgshpo'
+HeaderFrame.BackgroundColor3 = frameColor
+HeaderFrame.BorderSizePixel = 0
+HeaderFrame.Size = UDim2.new(1, 0, 0, 60)
+HeaderFrame.ZIndex = 9001
+HeaderFrame.Parent = MainFrame
+
+local HeaderCorner = Instance.new('UICorner')
+HeaderCorner.Name = 'wskfe'
+HeaderCorner.CornerRadius = UDim.new(0, 16)
+HeaderCorner.Parent = HeaderFrame
+
+local LogoFrame = Instance.new('Frame')
+LogoFrame.Name = 'gerxqciv'
+LogoFrame.BackgroundColor3 = accentColor
+LogoFrame.Position = UDim2.new(0, 15, 0.5, -18)
+LogoFrame.Size = UDim2.new(0, 36, 0, 36)
+LogoFrame.BorderSizePixel = 0
+LogoFrame.ZIndex = 9002
+LogoFrame.Parent = HeaderFrame
+
+local LogoCorner = Instance.new('UICorner')
+LogoCorner.Name = 'scxrps'
+LogoCorner.CornerRadius = UDim.new(0, 8)
+LogoCorner.Parent = LogoFrame
+
+local LogoGlow = Instance.new('ImageLabel')
+LogoGlow.Name = 'hbdksm'
+LogoGlow.BackgroundTransparency = 1
+LogoGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+LogoGlow.Size = UDim2.new(1, 40, 1, 40)
+LogoGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+LogoGlow.Image = 'rbxasset://textures/ui/Glow.png'
+LogoGlow.ImageColor3 = accentColor
+LogoGlow.ImageTransparency = 0.6
+LogoGlow.ZIndex = LogoFrame.ZIndex - 1
+LogoGlow.Parent = LogoFrame
+
+local LogoImage = Instance.new('ImageLabel')
+LogoImage.Name = 'tebiemwta'
+LogoImage.Image = 'rbxassetid://99495807378456'  
+
+LogoImage.BackgroundTransparency = 1
+LogoImage.Size = UDim2.new(1, 0, 1, 0)
+LogoImage.Position = UDim2.new(0, 0, 0, 0)
+LogoImage.ScaleType = Enum.ScaleType.Fit
+LogoImage.ZIndex = 9003
+LogoImage.Parent = LogoFrame
+
+local TitleLabel = Instance.new('TextLabel')
+TitleLabel.Name = 'omcejvz'
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.Position = UDim2.new(0, 58, 0, 10)
+TitleLabel.Size = UDim2.new(0, 200, 0, 24)
+TitleLabel.Font = Enum.Font.GothamBold
+TitleLabel.Text = 'ZENSTED DESYNC'
+TitleLabel.TextColor3 = accentColor
+TitleLabel.TextSize = 18
+TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
+TitleLabel.ZIndex = 9002
+TitleLabel.Parent = HeaderFrame
+
+local VersionLabel = Instance.new('TextLabel')
+VersionLabel.Name = 'ggctsqkr'
+VersionLabel.BackgroundTransparency = 1
+VersionLabel.Position = UDim2.new(0, 58, 0, 36)
+VersionLabel.Size = UDim2.new(0, 200, 0, 16)
+VersionLabel.Font = Enum.Font.Gotham
+VersionLabel.Text = 'v1.0.3 | Zensted Edition'
+VersionLabel.TextColor3 = textDim
+VersionLabel.TextSize = 10
+VersionLabel.TextXAlignment = Enum.TextXAlignment.Left
+VersionLabel.ZIndex = 9002
+VersionLabel.Parent = HeaderFrame
+
+local SyncStatusFrame = Instance.new('Frame')
+SyncStatusFrame.Name = 'qsyubwurw'
+SyncStatusFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 70)
+SyncStatusFrame.BorderSizePixel = 0
+SyncStatusFrame.Position = UDim2.new(1, -155, 0.5, -16)
+SyncStatusFrame.Size = UDim2.new(0, 95, 0, 32)
+SyncStatusFrame.ZIndex = 9002
+SyncStatusFrame.Parent = HeaderFrame
+
+local SyncCorner = Instance.new('UICorner')
+SyncCorner.CornerRadius = UDim.new(0, 10)
+SyncCorner.Parent = SyncStatusFrame
+
+local SyncStroke = Instance.new('UIStroke')
+SyncStroke.Name = 'cywjlym'
+SyncStroke.Color = accentDark
+SyncStroke.Thickness = 1.5
+SyncStroke.Transparency = 0.5
+SyncStroke.Parent = SyncStatusFrame
+
+local ToggleIndicator = Instance.new('Frame')
+ToggleIndicator.Name = 'ojowep'
+ToggleIndicator.BackgroundColor3 = accentDark
+ToggleIndicator.BorderSizePixel = 0
+ToggleIndicator.Position = UDim2.new(0, 10, 0.5, -5)
+ToggleIndicator.Size = UDim2.new(0, 10, 0, 10)
+ToggleIndicator.ZIndex = 9003
+ToggleIndicator.Parent = SyncStatusFrame
+
+local IndicatorCorner = Instance.new('UICorner')
+IndicatorCorner.CornerRadius = UDim.new(1, 0)
+IndicatorCorner.Parent = ToggleIndicator
+
+local StatusLabel = Instance.new('TextLabel')
+StatusLabel.Name = 'jshhzibsa'
+StatusLabel.BackgroundTransparency = 1
+StatusLabel.Position = UDim2.new(0, 24, 0, 0)
+StatusLabel.Size = UDim2.new(1, -28, 1, 0)
+StatusLabel.Font = Enum.Font.GothamBold
+StatusLabel.Text = 'SYNCED'
+StatusLabel.TextColor3 = textColor
+StatusLabel.TextSize = 11
+StatusLabel.TextXAlignment = Enum.TextXAlignment.Left
+StatusLabel.ZIndex = 9003
+StatusLabel.Parent = SyncStatusFrame
+
+local CloseButton = Instance.new('TextButton')
+CloseButton.Name = 'ipxnpn'
+CloseButton.BackgroundColor3 = Color3.fromRGB(45, 50, 70)
+CloseButton.BorderSizePixel = 0
+CloseButton.Position = UDim2.new(1, -45, 0.5, -16)
+CloseButton.Size = UDim2.new(0, 32, 0, 32)
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.Text = 'X'
+CloseButton.TextColor3 = textColor
+CloseButton.TextSize = 16
+CloseButton.ZIndex = 9003
+CloseButton.AutoButtonColor = false
+CloseButton.Parent = HeaderFrame
+
+local CloseCorner = Instance.new('UICorner')
+CloseCorner.CornerRadius = UDim.new(0, 10)
+CloseCorner.Parent = CloseButton
+
+CloseButton.MouseEnter:Connect(function()
+    TweenService:Create(CloseButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = accentColor}):Play()
 end)
 
-troll:Textbox("Launch someone to space","CAN'T be shortened",true,function(plr)
-    _G.freeze = true
-    p = Instance.new("Part",workspace)
-    p.Name = "snowball"
-    while _G.freeze do
-    wait(1)
-    local args = {
-        [1] = {
-            ["visual"] = Instance.new("Part",workspace),
-            ["airshot"] = true,
-            ["active"] = false,
-            ["vel"] = Vector3.new(0,4545444444444,0),
-            ["Update"] = function()end --[[Update]],
-            ["startpos"] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2),
-            ["hitdat"] = {
-                [1] = game:GetService("Players")[tostring(plr)].Character.Head,
-                [2] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2),
-                [3] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2),
-                [4] = Enum.Material.Sand
-            },
-            ["CheckCol"] = function()end --[[CheckCol]],
-            ["FireSnow"] = function()end --[[FireSnow]],
-            ["pos"] = Vector3.new(math.huge*math.huge*2,math.huge*math.huge*2,math.huge*math.huge*2)
-        }
-    }
-    
-    game:GetService("ReplicatedStorage").Remotes.Combat.Hit:FireServer(unpack(args))
-end
+CloseButton.MouseLeave:Connect(function()
+    TweenService:Create(CloseButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(45, 50, 70)}):Play()
 end)
 
-troll:Button("Stop annoying",function()
-_G.Annoy = false
-_G.freeze = false
+CloseButton.MouseButton1Click:Connect(function()
+    MainFrame.Visible = false
 end)
 
-troll:Seperator()
+local ContentFrame = Instance.new('Frame')
+ContentFrame.Name = 'ywmlczldjrb'
+ContentFrame.BackgroundTransparency = 1
+ContentFrame.Position = UDim2.new(0, 15, 0, 75)
+ContentFrame.Size = UDim2.new(1, -30, 1, -90)
+ContentFrame.ZIndex = 9001
+ContentFrame.Parent = MainFrame
 
-main:Button("Anti-AFK",function()
-    if getconnections then
-    for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
-        v:Disable()
-    end
-end
-end)
+local SectionLabel = Instance.new('TextLabel')
+SectionLabel.Name = 'lqtbytcvxq'
+SectionLabel.BackgroundTransparency = 1
+SectionLabel.Size = UDim2.new(1, 0, 0, 25)
+SectionLabel.Font = Enum.Font.GothamBold
+SectionLabel.Text = 'DESYNC CONTROLS'
+SectionLabel.TextColor3 = accentColor
+SectionLabel.TextSize = 14
+SectionLabel.TextXAlignment = Enum.TextXAlignment.Left
+SectionLabel.ZIndex = 9002
+SectionLabel.Parent = ContentFrame
 
-main:Button("Get all hats",function()
-    for i,v in pairs(game.ReplicatedStorage.models.hats:GetDescendants()) do
-        if v:IsA("StringValue") and v.Name == "id" then
-        wait()
-        local args = {
-            [1] = v.Value
-        }
-        game:GetService("ReplicatedStorage").Remotes.Data.bungus:FireServer(unpack(args))
-        end
-        end 
-end)
+local Underline = Instance.new('Frame')
+Underline.Name = 'wsoafri'
+Underline.BackgroundColor3 = accentColor
+Underline.BorderSizePixel = 0
+Underline.Position = UDim2.new(0, 0, 1, -2)
+Underline.Size = UDim2.new(0.3, 0, 0, 2)
+Underline.ZIndex = 9002
+Underline.Parent = SectionLabel
 
-lp:Button("Speed hax",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Size = Vector3.new(0.8,0.8,0.8)
-end)
+local DesyncToggleFrame = Instance.new('Frame')
+DesyncToggleFrame.Name = 'dwcpsjtgwa'
+DesyncToggleFrame.BackgroundColor3 = frameColor
+DesyncToggleFrame.BorderSizePixel = 0
+DesyncToggleFrame.Position = UDim2.new(0, 0, 0, 30)
+DesyncToggleFrame.Size = UDim2.new(1, 0, 0, 55)
+DesyncToggleFrame.ZIndex = 9002
+DesyncToggleFrame.Parent = ContentFrame
 
-lp:Button("Disable speed hax",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Size = Vector3.new(2.1,2.1,2.1)
-end)
+local DesyncCorner = Instance.new('UICorner')
+DesyncCorner.CornerRadius = UDim.new(0, 12)
+DesyncCorner.Parent = DesyncToggleFrame
 
-farm:Button("Farm 4b / 8b per few sec + get 40 rank",function()
-    if getconnections then
-    for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
-        v:Disable()
-    end
-end
-    coroutine.wrap(
-        spawn(function()
-            p = Instance.new("Part",workspace)
-            p.Name = "snowball"
-            while task.wait(2) do
-                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-50000000000000,10000000000000000,5000000000000)
-                wait()
-                for i,v in pairs(game.Players:GetPlayers()) do
-                if v:IsA("Player") and v.Name ~= game.Players.LocalPlayer.Name then
-                if game.Players:FindFirstChild(v.Name) and workspace:FindFirstChild(v.Name) then
-                _G.plrname = v.Name
-                local args = {
-                    [1] = {
-                        ["visual"] = workspace.snowball,
-                        ["airshot"] = false,
-                        ["active"] = false,
-                        ["vel"] = Vector3.new(-10.851346969604492, 4.623229026794434, 2.3129332065582275),
-                        ["Update"] = function()end --[[Update]],
-                        ["startpos"] = Vector3.new(160.68650817871094, 27.411270141601562, -247.69456481933594),
-                        ["hitdat"] = {
-                            [1] = game:GetService("Players")[_G.plrname].Character.HumanoidRootPart,
-                            [2] = Vector3.new(121.31280517578125, 47.99488067626953, -239.3021697998047),
-                            [3] = Vector3.new(0.9414222240447998, -0.3303876519203186, 0.06758713722229004),
-                            [4] = Enum.Material.Sand
-                        },
-                        ["CheckCol"] = function()end --[[CheckCol]],
-                        ["FireSnow"] = function()end --[[FireSnow]],
-                        ["pos"] = Vector3.new(121.77326202392578, 47.798702239990234, -239.4003143310547)
-                    }
-                }
-                
-                game:GetService("ReplicatedStorage").Remotes.Combat.Hit:FireServer(unpack(args))
-            else
-                print("Getting new player to farm on")
-                for i,v in pairs(game.Players:GetPlayers()) do
-                    if v:IsA("Player") and v.Name ~= game.Players.LocalPlayer.Name then
-                        wait()
-                        _G.plrname = v.Name
-                        print("player found: " .. _G.plrname)
-                    end
-                end
-                end
-            end
-            end
-            end
-        end)
-    )
-end)
+local DesyncStroke = Instance.new('UIStroke')
+DesyncStroke.Name = 'fpjkrv'
+DesyncStroke.Color = accentColor
+DesyncStroke.Thickness = 1
+DesyncStroke.Transparency = 0.8
+DesyncStroke.Parent = DesyncToggleFrame
 
-farm:Button("Farm l's",function()
-    if getconnections then
-    for i,v in pairs(getconnections(game.Players.LocalPlayer.Idled)) do
-        v:Disable()
-    end
-end
-    p = Instance.new("Part",workspace)
-    p.Name = "snowball"
-    while wait(1) do
-        wait(1)
-        for i,v in pairs(game.Players:GetDescendants()) do
-        if v:IsA("Player") and v.Name == game.Players.LocalPlayer.Name then
-        plrname = v.Name
-        
-        local args = {
-            [1] = {
-                ["visual"] = workspace.snowball,
-                ["airshot"] = false,
-                ["active"] = false,
-                ["vel"] = Vector3.new(-10.851346969604492, 4.623229026794434, 2.3129332065582275),
-                ["Update"] = function()end --[[Update]],
-                ["startpos"] = Vector3.new(160.68650817871094, 27.411270141601562, -247.69456481933594),
-                ["hitdat"] = {
-                    [1] = game:GetService("Players")[plrname].Character:FindFirstChildWhichIsA("BasePart"),
-                    [2] = Vector3.new(121.31280517578125, 47.99488067626953, -239.3021697998047),
-                    [3] = Vector3.new(0.9414222240447998, -0.3303876519203186, 0.06758713722229004),
-                    [4] = Enum.Material.Sand
-                },
-                ["CheckCol"] = function()end --[[CheckCol]],
-                ["FireSnow"] = function()end --[[FireSnow]],
-                ["pos"] = Vector3.new(121.77326202392578, 47.798702239990234, -239.4003143310547)
-            }
-        }
-        
-        game:GetService("ReplicatedStorage").Remotes.Combat.Hit:FireServer(unpack(args))
-        end
-        end
-        end
-end)
+local DesyncTitle = Instance.new('TextLabel')
+DesyncTitle.Name = 'zexmmnd'
+DesyncTitle.BackgroundTransparency = 1
+DesyncTitle.Position = UDim2.new(0, 14, 0, 8)
+DesyncTitle.Size = UDim2.new(1, -100, 0, 18)
+DesyncTitle.Font = Enum.Font.GothamBold
+DesyncTitle.Text = 'Enable Desync'
+DesyncTitle.TextColor3 = textColor
+DesyncTitle.TextSize = 13
+DesyncTitle.TextXAlignment = Enum.TextXAlignment.Left
+DesyncTitle.ZIndex = 9003
+DesyncTitle.Parent = DesyncToggleFrame
 
-lp:Button("Hit yourself",function()
-    p = Instance.new("Part",workspace)
-    p.Name = "snowball"
-    wait(1)
-    for i,v in pairs(game.Players:GetDescendants()) do
-    if v:IsA("Player") and v.Name == game.Players.LocalPlayer.Name then
-    plrname = v.Name
-    local args = {
-        [1] = {
-            ["visual"] = workspace.snowball,
-            ["airshot"] = false,
-            ["active"] = false,
-            ["vel"] = Vector3.new(-10.851346969604492, 4.623229026794434, 2.3129332065582275),
-            ["Update"] = function()end --[[Update]],
-            ["startpos"] = Vector3.new(160.68650817871094, 27.411270141601562, -247.69456481933594),
-            ["hitdat"] = {
-                [1] = game:GetService("Players")[plrname].Character:FindFirstChildWhichIsA("BasePart"),
-                [2] = Vector3.new(121.31280517578125, 47.99488067626953, -239.3021697998047),
-                [3] = Vector3.new(0.9414222240447998, -0.3303876519203186, 0.06758713722229004),
-                [4] = Enum.Material.Sand
-            },
-            ["CheckCol"] = function()end --[[CheckCol]],
-            ["FireSnow"] = function()end --[[FireSnow]],
-            ["pos"] = Vector3.new(121.77326202392578, 47.798702239990234, -239.4003143310547)
-        }
-    }
-    
-    game:GetService("ReplicatedStorage").Remotes.Combat.Hit:FireServer(unpack(args))
-    end
-    end
-end)
+local DesyncDesc = Instance.new('TextLabel')
+DesyncDesc.Name = 'emmcivwe'
+DesyncDesc.BackgroundTransparency = 1
+DesyncDesc.Position = UDim2.new(0, 14, 0, 28)
+DesyncDesc.Size = UDim2.new(1, -100, 0, 20)
+DesyncDesc.Font = Enum.Font.Gotham
+DesyncDesc.Text = 'Freezes character position on server, allows client control'
+DesyncDesc.TextColor3 = textDim
+DesyncDesc.TextSize = 9
+DesyncDesc.TextXAlignment = Enum.TextXAlignment.Left
+DesyncDesc.TextWrapped = true
+DesyncDesc.ZIndex = 9003
+DesyncDesc.Parent = DesyncToggleFrame
 
-troll:Textbox("Fling someone","can be shortened",true,function(eee)
-    _G.fling = true
-    local lp = game:FindService("Players").LocalPlayer
+local DesyncSwitchFrame = Instance.new('Frame')
+DesyncSwitchFrame.Name = 'ynmvocjhu'
+DesyncSwitchFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 70)
+DesyncSwitchFrame.BorderSizePixel = 0
+DesyncSwitchFrame.Position = UDim2.new(1, -62, 0.5, -14)
+DesyncSwitchFrame.Size = UDim2.new(0, 52, 0, 28)
+DesyncSwitchFrame.ZIndex = 9003
+DesyncSwitchFrame.Parent = DesyncToggleFrame
 
-    local function gplr(String)
-        local Found = {}
-        local strl = String:lower()
-        if strl == "all" then
-            for i,v in pairs(game:FindService("Players"):GetPlayers()) do
-                table.insert(Found,v)
-            end
-        elseif strl == "others" then
-            for i,v in pairs(game:FindService("Players"):GetPlayers()) do
-                if v.Name ~= lp.Name then
-                    table.insert(Found,v)
-                end
-            end 
-        elseif strl == "me" then
-            for i,v in pairs(game:FindService("Players"):GetPlayers()) do
-                if v.Name == lp.Name then
-                    table.insert(Found,v)
-                end
-            end 
-        else
-            for i,v in pairs(game:FindService("Players"):GetPlayers()) do
-                if v.Name:lower():sub(1, #String) == String:lower() then
-                    table.insert(Found,v)
-                end
-            end 
-        end
-        return Found 
-    end
-    
-        local Target = gplr(string.lower(eee))
-        if Target[1] then
-            Target = Target[1]
-            
-            local Thrust = Instance.new('BodyThrust', lp.Character.HumanoidRootPart)
-            Thrust.Force = Vector3.new(9999,9999,9999)
-            Thrust.Name = "YeetForce"
-            repeat
-                lp.Character.HumanoidRootPart.CFrame = Target.Character.HumanoidRootPart.CFrame
-                Thrust.Location = Target.Character.HumanoidRootPart.Position
-                task.wait()
-                if _G.fling == false then
-                    Thrust:Destroy()
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-                    local BeenASecond, V3 = false, Vector3.new(0, 0, 0)
-                    delay(5, function()
-                        BeenASecond = true
-                    end)
-                    while not BeenASecond do
-                        for _, v in ipairs(game.Players.LocalPlayer.Character:GetDescendants()) do
-                            if v.IsA(v, "BasePart") then
-                                v.Velocity, v.RotVelocity = V3, V3
-                            end
-                        end
-                        wait()
-                    end
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1.03902459, 4.5, -3.21702695, -0.907164931, -2.45367512e-17, -0.420775205, 8.12477146e-18, 1, -7.58297048e-17, 0.420775205, -7.22087514e-17, -0.9071649)
-                    wait(5)
-                    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-                end
-            until _G.fling == false
+local SwitchCorner = Instance.new('UICorner')
+SwitchCorner.CornerRadius = UDim.new(1, 0)
+SwitchCorner.Parent = DesyncSwitchFrame
+
+local SwitchKnob = Instance.new('Frame')
+SwitchKnob.Name = 'gyouhlkp'
+SwitchKnob.BackgroundColor3 = textColor
+SwitchKnob.BorderSizePixel = 0
+SwitchKnob.Position = UDim2.new(0, 3, 0.5, -11)
+SwitchKnob.Size = UDim2.new(0, 22, 0, 22)
+SwitchKnob.ZIndex = 9004
+SwitchKnob.Parent = DesyncSwitchFrame
+
+local KnobCorner = Instance.new('UICorner')
+KnobCorner.CornerRadius = UDim.new(1, 0)
+KnobCorner.Parent = SwitchKnob
+
+local KnobGlow = Instance.new('ImageLabel')
+KnobGlow.Name = 'cztsnx'
+KnobGlow.BackgroundTransparency = 1
+KnobGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+KnobGlow.Size = UDim2.new(1, 40, 1, 40)
+KnobGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+KnobGlow.Image = 'rbxasset://textures/ui/Glow.png'
+KnobGlow.ImageColor3 = textColor
+KnobGlow.ImageTransparency = 0.7
+KnobGlow.ZIndex = SwitchKnob.ZIndex - 1
+KnobGlow.Parent = SwitchKnob
+
+local DesyncButton = Instance.new('TextButton')
+DesyncButton.Name = 'ffysyz'
+DesyncButton.BackgroundTransparency = 1
+DesyncButton.Size = UDim2.new(1, 0, 1, 0)
+DesyncButton.Text = ''
+DesyncButton.ZIndex = 9005
+DesyncButton.Parent = DesyncToggleFrame
+
+DesyncButton.MouseButton1Click:Connect(function()
+
+    local originalCFrame = HumanoidRootPart.CFrame
+
+    local dummyPart = Instance.new('Part')
+    dummyPart.Name = 'blhlpvvbcu'
+    dummyPart.Size = Vector3.new(2, 2, 2)
+    dummyPart.Transparency = 1
+    dummyPart.CanCollide = false
+    dummyPart.Anchored = true
+    dummyPart.CFrame = HumanoidRootPart.CFrame
+    dummyPart.Parent = Workspace
+
+    RunService.RenderStepped:Connect(function()
+        dummyPart.CFrame = HumanoidRootPart.CFrame
+    end)
+
+    CurrentCamera.CameraSubject = dummyPart
+
+    RunService.RenderStepped:Connect(function()
+        if CurrentCamera.CameraSubject ~= dummyPart then
+            CurrentCamera.CameraSubject = dummyPart
         end
     end)
 
-troll:Button("Stop flinging",function()
-    _G.fling = false
+    HumanoidRootPart:SetNetworkOwner(nil)
+
+    RunService.Heartbeat:Connect(function()
+        HumanoidRootPart.CFrame = originalCFrame
+        HumanoidRootPart.AssemblyLinearVelocity = Vector3.zero
+
+        RunService.RenderStepped:Wait()
+
+        HumanoidRootPart.CFrame = HumanoidRootPart.CFrame
+        HumanoidRootPart.AssemblyLinearVelocity = HumanoidRootPart.AssemblyLinearVelocity
+    end)
+
+    local Notification = Instance.new('Frame')
+    Notification.Name = 'kwwpflz'
+    Notification.BackgroundColor3 = bgColor
+    Notification.BorderSizePixel = 0
+    Notification.Position = UDim2.new(1, 20, 0.95, 0)
+    Notification.Size = UDim2.new(0, 300, 0, 80)
+    Notification.AnchorPoint = Vector2.new(0, 1)
+    Notification.ZIndex = 10000
+    Notification.Parent = ScreenGui
+
+    local NotifCorner = Instance.new('UICorner')
+    NotifCorner.Name = 'ijhwq'
+    NotifCorner.CornerRadius = UDim.new(0, 12)
+    NotifCorner.Parent = Notification
+
+    local NotifStroke = Instance.new('UIStroke')
+    NotifStroke.Name = 'smlcuk'
+    NotifStroke.Color = successColor
+    NotifStroke.Thickness = 2
+    NotifStroke.Parent = Notification
+
+    local NotifGlow = Instance.new('ImageLabel')
+    NotifGlow.Name = 'nxhwij'
+    NotifGlow.BackgroundTransparency = 1
+    NotifGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+    NotifGlow.Size = UDim2.new(1, 40, 1, 40)
+    NotifGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+    NotifGlow.Image = 'rbxasset://textures/ui/Glow.png'
+    NotifGlow.ImageColor3 = successColor
+    NotifGlow.ImageTransparency = 0.7
+    NotifGlow.ZIndex = Notification.ZIndex - 1
+    NotifGlow.Parent = Notification
+
+    local NotifTitle = Instance.new('TextLabel')
+    NotifTitle.Name = 'rmhmwlgq'
+    NotifTitle.BackgroundTransparency = 1
+    NotifTitle.Position = UDim2.new(0, 15, 0, 10)
+    NotifTitle.Size = UDim2.new(1, -30, 0, 22)
+    NotifTitle.Font = Enum.Font.GothamBold
+    NotifTitle.Text = 'DESYNC ACTIVE'
+    NotifTitle.TextColor3 = successColor
+    NotifTitle.TextSize = 14
+    NotifTitle.TextXAlignment = Enum.TextXAlignment.Left
+    NotifTitle.ZIndex = 10001
+    NotifTitle.Parent = Notification
+
+    local NotifDesc = Instance.new('TextLabel')
+    NotifDesc.Name = 'aqfudcxek'
+    NotifDesc.BackgroundTransparency = 1
+    NotifDesc.Position = UDim2.new(0, 15, 0, 35)
+    NotifDesc.Size = UDim2.new(1, -30, 0, 35)
+    NotifDesc.Font = Enum.Font.Gotham
+    NotifDesc.Text = 'Server frozen! Camera following your real position!'
+    NotifDesc.TextColor3 = textDim
+    NotifDesc.TextSize = 11
+    NotifDesc.TextWrapped = true
+    NotifDesc.TextXAlignment = Enum.TextXAlignment.Left
+    NotifDesc.TextYAlignment = Enum.TextYAlignment.Top
+    NotifDesc.ZIndex = 10001
+    NotifDesc.Parent = Notification
+
+    TweenService:Create(Notification, TweenInfo.new(0.5, Enum.EasingStyle.Back), {Position = UDim2.new(1, -320, 0.95, 0)}):Play()
+    task.delay(3, function()
+        TweenService:Create(Notification, TweenInfo.new(0.4, Enum.EasingStyle.Quad), {Position = UDim2.new(1, 20, 0.95, 0)}):Play()
+        task.wait(0.4)
+        Notification:Destroy()
+    end)
+
+    ToggleIndicator.BackgroundColor3 = successColor
+    StatusLabel.Text = 'DESYNCED'
+    TweenService:Create(SyncStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {Color = successColor, Transparency = 0.2}):Play()
+    TweenService:Create(SwitchKnob, TweenInfo.new(0.3, Enum.EasingStyle.Back), {Position = UDim2.new(1, -25, 0.5, -11)}):Play()
+    TweenService:Create(DesyncSwitchFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {BackgroundColor3 = accentColor}):Play()
+    TweenService:Create(DesyncStroke, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {Transparency = 0.3}):Play()
 end)
 
-troll:Seperator()
-
-troll:Button("Play all sounds",function()
-    for i,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("Sound") then
-        v:Play()
-        end
-    end        
-end)
-troll:Button("Loop play all sounds",function()
-    _G.SpamSounds = true
-    while _G.SpamSounds do
-    wait()
-    if not _G.SpamSounds then break end
-    for i,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("Sound") then
-        v:Play()
-        end
-    end       
-end
-end)
-troll:Button("Unloop playing all sounds",function()
-_G.SpamSounds = false
-end)
-troll:Button("Stop all sounds",function()
-    for i,v in pairs(workspace:GetDescendants()) do
-        if v:IsA("Sound") then
-        v:Stop()
-        end
-    end       
-end)
-main:Button("Drain money (leave to stop)",function()
-while task.wait() do 
-    game:GetService("ReplicatedStorage").Remotes.Products.BuyLootbox:InvokeServer(6,"score")    
-end
-end)
-lp:Button("Anti-Snowball",function()
-    game.Players.LocalPlayer.Character.plam:Destroy()  
+DesyncButton.MouseEnter:Connect(function()
+    TweenService:Create(DesyncToggleFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = Color3.fromRGB(45, 50, 70)}):Play()
 end)
 
-lp:Button("Disable Anti-Snowball",function()
-_G.lmao = false
+DesyncButton.MouseLeave:Connect(function()
+    TweenService:Create(DesyncToggleFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {BackgroundColor3 = frameColor}):Play()
 end)
 
-ex:Button("Expand Head [Legit]",function()
-    while wait() do
-    for i,v in pairs(workspace:GetDescendants()) do
-    if v:IsA("BasePart") and v.Name == "Head" and v.Parent:IsA("Model") and v.Parent.Name ~= game.Players.LocalPlayer.Name then
-        v.Transparency = 0.5
-        v.Size = Vector3.new(3.5,3.5,3.5)
-        v.CanCollide = false
-    end
-end
-end
-end)
+local ServerPosToggleFrame = Instance.new('Frame')
+ServerPosToggleFrame.Name = 'gieurbtdcg'
+ServerPosToggleFrame.BackgroundColor3 = frameColor
+ServerPosToggleFrame.BorderSizePixel = 0
+ServerPosToggleFrame.Position = UDim2.new(0, 0, 0, 90)
+ServerPosToggleFrame.Size = UDim2.new(1, 0, 0, 55)
+ServerPosToggleFrame.ZIndex = 9002
+ServerPosToggleFrame.Parent = ContentFrame
 
-ex:Button("Expand Head [Blatant]",function()
-    while wait() do
-    for i,v in pairs(workspace:GetDescendants()) do
-    if v:IsA("BasePart") and v.Name == "Head" and v.Parent:IsA("Model") and v.Parent.Name ~= game.Players.LocalPlayer.Name then
-        v.Transparency = 0.5
-        v.Size = Vector3.new(8,8,8)
-        v.CanCollide = false
-    end
-end
-end
-end)
+local ServerPosCorner = Instance.new('UICorner')
+ServerPosCorner.CornerRadius = UDim.new(0, 12)
+ServerPosCorner.Parent = ServerPosToggleFrame
 
-tp:Button("Snow Scoob",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(9.66229725, 31.6212063, -324.965546, 0.507394612, 7.54966183e-16, -0.861713827, -4.09284255e-16, 1, 6.35126797e-16, 0.861713827, 3.04259529e-17, 0.507394612)
-end)
+local ServerPosStroke = Instance.new('UIStroke')
+ServerPosStroke.Name = 'fglurh'
+ServerPosStroke.Color = accentColor
+ServerPosStroke.Thickness = 1
+ServerPosStroke.Transparency = 0.8
+ServerPosStroke.Parent = ServerPosToggleFrame
 
-tp:Button("Gold Scoob",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(111.732109, 4976.10156, -157.587601, 0.0836840868, -4.02065695e-18, 0.996492326, -4.42301315e-17, 1, 7.74919672e-18, -0.996492326, -4.4723472e-17, 0.0836840868)
-end)
+local ServerPosTitle = Instance.new('TextLabel')
+ServerPosTitle.Name = 'ocvygww'
+ServerPosTitle.BackgroundTransparency = 1
+ServerPosTitle.Position = UDim2.new(0, 14, 0, 8)
+ServerPosTitle.Size = UDim2.new(1, -100, 0, 18)
+ServerPosTitle.Font = Enum.Font.GothamBold
+ServerPosTitle.Text = 'Show Server Position'
+ServerPosTitle.TextColor3 = textColor
+ServerPosTitle.TextSize = 13
+ServerPosTitle.TextXAlignment = Enum.TextXAlignment.Left
+ServerPosTitle.ZIndex = 9003
+ServerPosTitle.Parent = ServerPosToggleFrame
 
-tp:Seperator()
+local ServerPosDesc = Instance.new('TextLabel')
+ServerPosDesc.Name = 'akjmirkq'
+ServerPosDesc.BackgroundTransparency = 1
+ServerPosDesc.Position = UDim2.new(0, 14, 0, 28)
+ServerPosDesc.Size = UDim2.new(1, -100, 0, 20)
+ServerPosDesc.Font = Enum.Font.Gotham
+ServerPosDesc.Text = 'Visualize where players see your character'
+ServerPosDesc.TextColor3 = textDim
+ServerPosDesc.TextSize = 9
+ServerPosDesc.TextXAlignment = Enum.TextXAlignment.Left
+ServerPosDesc.TextWrapped = true
+ServerPosDesc.ZIndex = 9003
+ServerPosDesc.Parent = ServerPosToggleFrame
 
+local ServerPosSwitchFrame = Instance.new('Frame')
+ServerPosSwitchFrame.Name = 'svfjjruwf'
+ServerPosSwitchFrame.BackgroundColor3 = Color3.fromRGB(45, 50, 70)
+ServerPosSwitchFrame.BorderSizePixel = 0
+ServerPosSwitchFrame.Position = UDim2.new(1, -62, 0.5, -14)
+ServerPosSwitchFrame.Size = UDim2.new(0, 52, 0, 28)
+ServerPosSwitchFrame.ZIndex = 9003
+ServerPosSwitchFrame.Parent = ServerPosToggleFrame
 
-tp:Button("Spawn",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1.03902459, 4.5, -3.21702695, -0.907164931, -2.45367512e-17, -0.420775205, 8.12477146e-18, 1, -7.58297048e-17, 0.420775205, -7.22087514e-17, -0.9071649)
-end)
+local ServerSwitchCorner = Instance.new('UICorner')
+ServerSwitchCorner.CornerRadius = UDim.new(1, 0)
+ServerSwitchCorner.Parent = ServerPosSwitchFrame
 
-tp:Button("Castle",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(358.669861, 52.5, -166.420197, 0.141238213, -1.07628212e-10, 0.989975631, -4.46174729e-11, 1, 1.1508354e-10, -0.989975631, -6.04244016e-11, 0.141238)
-end)
+local ServerSwitchKnob = Instance.new('Frame')
+ServerSwitchKnob.Name = 'ucejkvnf'
+ServerSwitchKnob.BackgroundColor3 = textColor
+ServerSwitchKnob.BorderSizePixel = 0
+ServerSwitchKnob.Position = UDim2.new(0, 3, 0.5, -11)
+ServerSwitchKnob.Size = UDim2.new(0, 22, 0, 22)
+ServerSwitchKnob.ZIndex = 9004
+ServerSwitchKnob.Parent = ServerPosSwitchFrame
 
-tp:Button("Pyramid",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(244.01358, 30.0698872, -214.819855, -0.0125390803, -5.26687634e-12, 0.999921381, 2.5928245e-13, 1, 5.27054182e-12, -0.999921381, 3.253498e-13, -0.01253908)
-end)
+local ServerKnobCorner = Instance.new('UICorner')
+ServerKnobCorner.CornerRadius = UDim.new(1, 0)
+ServerKnobCorner.Parent = ServerSwitchKnob
 
-tp:Button("FFA Mountain",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-133.708221, 70.5633926, -163.615097, -0.723906875, 5.42660274e-12, -0.689897716, -2.70404064e-11, 1, 3.62391957e-11, 0.689897716, 4.48889155e-11, -0.7239)
-end)
+local ServerKnobGlow = Instance.new('ImageLabel')
+ServerKnobGlow.Name = 'mqotqb'
+ServerKnobGlow.BackgroundTransparency = 1
+ServerKnobGlow.Position = UDim2.new(0.5, 0, 0.5, 0)
+ServerKnobGlow.Size = UDim2.new(1, 40, 1, 40)
+ServerKnobGlow.AnchorPoint = Vector2.new(0.5, 0.5)
+ServerKnobGlow.Image = 'rbxasset://textures/ui/Glow.png'
+ServerKnobGlow.ImageColor3 = textColor
+ServerKnobGlow.ImageTransparency = 0.7
+ServerKnobGlow.ZIndex = ServerSwitchKnob.ZIndex - 1
+ServerKnobGlow.Parent = ServerSwitchKnob
 
-tp:Button("Igloo",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(373.394897, 4.5, 9.37975502, 0.0296952892, -2.01647778e-11, 0.999558985, 2.83234842e-11, 1, 1.93322303e-11, -0.999558985, 2.77369169e-11, 0.02969)
-end)
+local ServerPosButton = Instance.new('TextButton')
+ServerPosButton.Name = 'mylakd'
+ServerPosButton.BackgroundTransparency = 1
+ServerPosButton.Size = UDim2.new(1, 0, 1, 0)
+ServerPosButton.Text = ''
+ServerPosButton.ZIndex = 9005
+ServerPosButton.Parent = ServerPosToggleFrame
 
-tp:Button("Chair",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(257.525177, 3.92882156, 149.204178, 0.990109265, -7.83394531e-19, -0.140298367, 9.34186765e-19, 1, 1.00893918e-18, 0.140298367, -1.13002488e-18, 0.990109)
-end)
-
-tp:Button("Tower",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(243.50351, 105.5, -490.723328, -0.982477248, -3.16791121e-10, -0.186382696, -4.0294687e-10, 1, 4.24368707e-10, 0.186382696, 4.92034913e-10, -0.982477)
-end)
-
-tp:Button("Top",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(290.256317, 137.136261, 257.439636, 0.992756307, 4.79831691e-17, 0.120145202, -6.17687726e-17, 1, 1.11017108e-16, -0.120145202, -1.17634162e-16, 0.99275)
-end)
-
-tp:Button("Nimblz place",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-310.033813, -19.96875, -123.241585, 0.91987747, -1.45546039e-07, 0.392205864, -9.24321171e-08, 1, 5.87885779e-07, -0.392205864, -5.7703528e-07, 0.91987747)
-end)
-
-tp:Button("Green Box",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(57.6420326, 1.52587891e-05, 299.139313, -0.999973953, 1.76175589e-13, -0.00721407728, 1.79845003e-13, 1, -5.07998428e-13, 0.00721407728, -5.09282612e-13, -0.99997)
-end)
-
-tp:Button("Cave",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-115.53656, 109.432648, -293.941101, -0.0591185056, -2.26436225e-09, -0.998250961, -5.154779e-08, 1, 7.84438181e-10, 0.998250961, 5.15040064e-08, -0.0591185056)
-end)
-
-tp:Button("Grave",function()
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(129.454346, 12.5, -273.150146, 0.143596217, 5.00841812e-09, -0.989636362, -1.59446262e-10, 1, 5.03773157e-09, 0.989636362, -5.6560534e-10, 0.143596)
-end)
-
-tp:Button("Lake",function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(254.20492553710938, -33.33729934692383, 14.780176162719727)
-end)
-
-lp:Seperator()
-
-cr:Button("Break Head",function()
-    while true do
-        task.wait(0.1)
-        if game.Players.LocalPlayer.Character.plam.MakeSnowball.Value == false then
-            game.Players.LocalPlayer.Character.Head.head.MaxVelocity = 222
-            game.Players.LocalPlayer.Character.Head.head.DesiredAngle = 23423424135168
-            game.Players.LocalPlayer.Character.Head.head.CurrentAngle = 32423424000
-        else
-            game.Players.LocalPlayer.Character.Head.head.MaxVelocity = 0
-            game.Players.LocalPlayer.Character.Head.head.DesiredAngle = 0
-            game.Players.LocalPlayer.Character.Head.head.CurrentAngle = 0
-        end
-    end
-end)
-
-cr:Button("Invisibility",function()    wait(.5)
-    game.Players.LocalPlayer.Character.Torso.root:Destroy()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-    speaker = game.Players.LocalPlayer
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(111.732109, 4976.10156, -157.587601, 0.0836840868, -4.02065695e-18, 0.996492326, -4.42301315e-17, 1, 7.74919672e-18, -0.996492326, -4.4723472e-17, 0.0836840868)
-    workspace.CurrentCamera:remove()
-    wait(.1)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1.03902459, 4.5, -3.21702695, -0.907164931, -2.45367512e-17, -0.420775205, 8.12477146e-18, 1, -7.58297048e-17, 0.420775205, -7.22087514e-17, -0.9071649)
-    while wait() do
-    wait(.5)
-    workspace.CurrentCamera.CameraSubject = speaker.Character:FindFirstChild("Humanoid")
-    workspace.CurrentCamera.CameraType = "Custom"
-    speaker.CameraMinZoomDistance = 0.5
-    speaker.CameraMaxZoomDistance = 400
-    speaker.CameraMode = "Classic"
-    speaker.Character.Head.Anchored = false
-    repeat wait() until workspace.CurrentCamera.CameraSubject == speaker.Character:FindFirstChild("Head")
-    wait()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1.03902459, 4.5, -3.21702695, -0.907164931, -2.45367512e-17, -0.420775205, 8.12477146e-18, 1, -7.58297048e-17, 0.420775205, -7.22087514e-17, -0.9071649)
-end
-end)
-
-cr:Button("Animationless",function()
-    game.Players.LocalPlayer.Character.Humanoid.Animator:Destroy()
-end)
-
-troll:Seperator()
+ServerPosButton.MouseButton
